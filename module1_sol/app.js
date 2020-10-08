@@ -1,40 +1,34 @@
 (function () {
-    'use strict';
-    
-    angular.module('LunchCheck', [])
-    .controller('LunchCheckController', LunchCheckController);
-    
-    LunchCheckController.$inject = ['$scope'];
-    function LunchCheckController($scope) {
+'use strict';
 
-  $scope.itemsforlunch = "";
-  $scope.totalItemsLunch = 0;
+angular.module('LunchCheck', [])
 
-  
- $scope.CheckItems = function(){
+.controller('LunchCheckController', LunchCheckController);
 
-    var totalItems = 0;
-    $scope.totalItemsLunch = totalItems;
-    return "hello";
-    };
+LunchCheckController.$inject = ['$scope'];
 
-    function calculateNumberOfWords(string){
-      return str.split(' ').length;
-      console.log(calculateNumberOfWords(string))
-    };
+function LunchCheckController($scope){
+        $scope.items = '';
+        $scope.message = '';
+        $scope.checked = false;
 
-  
+        $scope.checkItems = function() {
+            if ($scope.items.trim().length == 0) {
+                $scope.empty = true;
+            } else {
+                $scope.checked = true;
+                $scope.empty = false;
+                var arrayDishes = $scope.items.split(',');
+                var arrayDishesWithoutEmptys = arrayDishes.filter(function(v) {
+                    return v.trim() !== '';
+                });
 
-  
-    
-      
-  
-
-  }
-      
-
-      
-      
-    
-    
-    })(); 
+        if (arrayDishesWithoutEmptys.length <= 3) {
+             $scope.message = 'Enjoy!';
+           } else {
+              $scope.message = 'Items are too much!';
+            }
+            }
+        };
+    }
+})();
